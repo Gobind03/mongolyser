@@ -7,7 +7,7 @@ export class MongoDBAdapter {
     async connect(con_string, db_name) {
         try {
             var connection = await mongodb.MongoClient.connect(con_string, { useNewUrlParser: true });
-            this.db = connection.db(db_name);
+            this.#db = connection.db(db_name);
             console.log("MongoClient Connection successfull.");
         }
         catch (ex) {
@@ -19,7 +19,7 @@ export class MongoDBAdapter {
         if (!query) {
             throw Error("mongoClient.findDocFieldsByFilter: query is not an object");
         }
-        return await this.db.collection(collection).find(query, {
+        return await this.#db.collection(collection).find(query, {
             projection: projection || {},
             limit: lmt || 0
         }).toArray();
@@ -29,18 +29,18 @@ export class MongoDBAdapter {
         if (!Array.isArray(query)) {
             throw Error("mongoClient.findDocByAggregation: query is not an object");
         }
-        return this.db.collection(collection).aggregate(query).toArray();
+        return this.#db.collection(collection).aggregate(query).toArray();
     }
 
     async getDocumentCountByQuery(collection, query) {
-        return this.db.collection(collection).estimatedDocumentCount(query || {})
+        return this.#db.collection(collection).estimatedDocumentCount(query || {})
     }
 
     async runAdminCommand(command) {
-        return this.db.runAdminCommand(command);
+        return this.#db.runAdminCommand(command);
     }
 
     async close() {
-        return await this.db.close();
+        return await this.#db.close();
     }
 }
