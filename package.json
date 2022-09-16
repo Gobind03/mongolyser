@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "handlebars": "^4.7.7",
+    "lodash": "^4.17.21",
     "mongodb": "^4.9.1",
     "nedb": "^1.8.0"
   }

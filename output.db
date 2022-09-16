@@ -1,0 +1,644 @@
+{
+    "sample_airbnb": [
+        {
+            "name": "address.location_2dsphere",
+            "key": {
+                "address.location": "2dsphere"
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:30.189Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "address.location": "2dsphere"
+                },
+                "name": "address.location_2dsphere",
+                "background": true,
+                "2dsphereIndexVersion": 3
+            },
+            "collection_name": "listingsAndReviews",
+            "db_name": "sample_airbnb"
+        },
+        {
+            "name": "name_1",
+            "key": {
+                "name": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:30.180Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "name": 1
+                },
+                "name": "name_1",
+                "background": true
+            },
+            "collection_name": "listingsAndReviews",
+            "db_name": "sample_airbnb"
+        },
+        {
+            "name": "property_type_1_room_type_1_beds_1",
+            "key": {
+                "property_type": 1,
+                "room_type": 1,
+                "beds": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:30.169Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "property_type": 1,
+                    "room_type": 1,
+                    "beds": 1
+                },
+                "name": "property_type_1_room_type_1_beds_1",
+                "background": true
+            },
+            "collection_name": "listingsAndReviews",
+            "db_name": "sample_airbnb"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:13.866Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "listingsAndReviews",
+            "db_name": "sample_airbnb"
+        }
+    ],
+    "sample_analytics": [
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:16.763Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "customers",
+            "db_name": "sample_analytics"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:10.413Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "accounts",
+            "db_name": "sample_analytics"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:14.983Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "transactions",
+            "db_name": "sample_analytics"
+        }
+    ],
+    "sample_geospatial": [
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:51:53.109Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "shipwrecks",
+            "db_name": "sample_geospatial"
+        },
+        {
+            "name": "coordinates_2dsphere",
+            "key": {
+                "coordinates": "2dsphere"
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:29.875Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "coordinates": "2dsphere"
+                },
+                "name": "coordinates_2dsphere",
+                "background": true,
+                "2dsphereIndexVersion": 3
+            },
+            "collection_name": "shipwrecks",
+            "db_name": "sample_geospatial"
+        }
+    ],
+    "sample_guides": [
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:18.434Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "planets",
+            "db_name": "sample_guides"
+        }
+    ],
+    "sample_mflix": [
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:17.840Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "users",
+            "db_name": "sample_mflix"
+        },
+        {
+            "name": "email_1",
+            "key": {
+                "email": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:29.619Z"
+            },
+            "spec": {
+                "v": 2,
+                "unique": true,
+                "key": {
+                    "email": 1
+                },
+                "name": "email_1"
+            },
+            "collection_name": "users",
+            "db_name": "sample_mflix"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:51:55.841Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "movies",
+            "db_name": "sample_mflix"
+        },
+        {
+            "name": "cast_text_fullplot_text_genres_text_title_text",
+            "key": {
+                "_fts": "text",
+                "_ftsx": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:29.601Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_fts": "text",
+                    "_ftsx": 1
+                },
+                "name": "cast_text_fullplot_text_genres_text_title_text",
+                "weights": {
+                    "cast": 1,
+                    "fullplot": 1,
+                    "genres": 1,
+                    "title": 1
+                },
+                "default_language": "english",
+                "language_override": "language",
+                "textIndexVersion": 3
+            },
+            "collection_name": "movies",
+            "db_name": "sample_mflix"
+        },
+        {
+            "name": "geo index",
+            "key": {
+                "location.geo": "2dsphere"
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:29.279Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "location.geo": "2dsphere"
+                },
+                "name": "geo index",
+                "2dsphereIndexVersion": 3
+            },
+            "collection_name": "theaters",
+            "db_name": "sample_mflix"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:13.253Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "theaters",
+            "db_name": "sample_mflix"
+        },
+        {
+            "name": "user_id_1",
+            "key": {
+                "user_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:29.288Z"
+            },
+            "spec": {
+                "v": 2,
+                "unique": true,
+                "key": {
+                    "user_id": 1
+                },
+                "name": "user_id_1"
+            },
+            "collection_name": "sessions",
+            "db_name": "sample_mflix"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:18.838Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "sessions",
+            "db_name": "sample_mflix"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:50:37.557Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "comments",
+            "db_name": "sample_mflix"
+        }
+    ],
+    "sample_restaurants": [
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:51:47.159Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "restaurants",
+            "db_name": "sample_restaurants"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:17.186Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "neighborhoods",
+            "db_name": "sample_restaurants"
+        }
+    ],
+    "sample_supplies": [
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:08.926Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "sales",
+            "db_name": "sample_supplies"
+        }
+    ],
+    "sample_training": [
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:51:08.547Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "inspections",
+            "db_name": "sample_training"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:19.240Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "posts",
+            "db_name": "sample_training"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:51:02.068Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "zips",
+            "db_name": "sample_training"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:51:21.486Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "grades",
+            "db_name": "sample_training"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:51:58.581Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "trips",
+            "db_name": "sample_training"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:03.397Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "companies",
+            "db_name": "sample_training"
+        },
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:50:47.834Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "routes",
+            "db_name": "sample_training"
+        }
+    ],
+    "sample_weatherdata": [
+        {
+            "name": "_id_",
+            "key": {
+                "_id": 1
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:01.121Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "_id": 1
+                },
+                "name": "_id_"
+            },
+            "collection_name": "data",
+            "db_name": "sample_weatherdata"
+        }
+    ]
+}
