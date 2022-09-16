@@ -19,6 +19,7 @@
     "electron": "^20.1.4"
   },
   "dependencies": {
-    "handlebars": "^4.7.7"
+    "handlebars": "^4.7.7",
+    "mongodb": "^4.9.1"
   }
 }
