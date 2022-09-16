@@ -1,0 +1,24 @@
+{
+  "name": "mongolyser",
+  "version": "1.0.0",
+  "description": "The All-In-One Leafy Buddy",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/Gobind03/mongolyser",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "MongoDB Flex Consulting",
+  "devDependencies": {
+    "electron": "^20.1.4"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.7"
+  }
+}
