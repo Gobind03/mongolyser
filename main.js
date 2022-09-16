@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const isDev = require('electron-is-dev');
 
 // Require Engine Services
 const dbStats = require("./engine/analysers/dbStats.analyser");
@@ -17,7 +18,9 @@ function createWindow() {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('ui/html/index.html')
+  mainWindow.loadURL(
+    isDev ? 'http://localhost:5173' : `file://${path.join(__dirname, '../build/index.html')}`
+  )
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
