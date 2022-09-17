@@ -8,6 +8,7 @@ const indexStats = require("./engine/analysers/index.analyser");
 const queryAnalysis = require("./engine/analysers/query.analyser");
 const writeLoadAnalysis = require("./engine/analysers/write_load.analyser");
 const connectionAnalysis = require("./engine/analysers/connections.analysis");
+const shardAnalysis = require("./engine/analysers/shard.analysis");
 
 
 function createWindow() {
@@ -38,6 +39,7 @@ app.whenReady().then(() => {
   ipcMain.handle('engine:queryAnalysis', queryAnalysis.analyse_queries);
   ipcMain.handle('engine:writeLoadAnalysis', writeLoadAnalysis.get_write_load_analysis);
   ipcMain.handle('engine:connectionRealTimeAnalysis', connectionAnalysis.get_current_conn_analysis);
+  ipcMain.handle('engine:shardAnalysis', shardAnalysis.get_shard_analysis);
 
   createWindow();
   app.on('activate', function () {
