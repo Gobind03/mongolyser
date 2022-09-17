@@ -215,3 +215,23 @@ exports.get_shard_analysis = async (host, user, password, port = 27016,
     };
 
 };
+
+
+exports.get_shard_status = async (host, user, password, port = 27016,
+    is_srv = false, queryString) => {
+    // Connect to MongoDB 
+    let mongoDBAdapter = new MongoDBAdapter();
+    await mongoDBAdapter.connect(host, user, password, "admin", port, is_srv, queryString);
+
+    let balancer = await mongodbAdapter.runCommand({ balancerStatus: 1 });
+    let shardsList = await mongodbAdapter.runCommand({ getShardMap: 1 });
+
+    return {
+        "shard_map": shardsList.map,
+        "shard_hosts": shardsList.hosts,
+        "shard_conn_strings": shardsList.connStrings,
+        "balancer_mode": balancer.mode,
+        "in_balancer_round": balancer.inBalancerRound,
+        "num_balancer_rounds": balancer.numBalancerRounds
+    };
+}

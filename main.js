@@ -40,6 +40,7 @@ app.whenReady().then(() => {
   ipcMain.handle('engine:writeLoadAnalysis', writeLoadAnalysis.get_write_load_analysis);
   ipcMain.handle('engine:connectionRealTimeAnalysis', connectionAnalysis.get_current_conn_analysis);
   ipcMain.handle('engine:shardAnalysis', shardAnalysis.get_shard_analysis);
+  ipcMain.handle('engine:shardStatus', shardAnalysis.get_shard_status);
 
   createWindow();
   app.on('activate', function () {
