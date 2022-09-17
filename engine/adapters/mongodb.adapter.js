@@ -1,13 +1,17 @@
 const mongodb = require("mongodb");
 
 
-export class MongoDBAdapter {
+exports.MongoDBAdapter = class {
     #db;
+    #connection;
 
-    async connect(con_string, db_name) {
+    async connect(host, user, password, db_name, port = 27017, is_srv = false, queryString) {
         try {
-            var connection = await mongodb.MongoClient.connect(con_string, { useNewUrlParser: true });
-            this.#db = connection.db(db_name);
+            let con_string = "";
+            if (is_srv) con_string = "mongodb+srv://" + user + ":" + password + "@" + host + "/" + queryString;
+            else con_string = "mongodb://" + user + ":" + password + "@" + host + ":" + port + "/" + queryString;
+            this.#connection = await mongodb.MongoClient.connect(con_string, { useNewUrlParser: true });
+            this.#db = this.#connection.db(db_name);
             console.log("MongoClient Connection successfull.");
         }
         catch (ex) {
@@ -29,7 +33,7 @@ export class MongoDBAdapter {
         if (!Array.isArray(query)) {
             throw Error("mongoClient.findDocByAggregation: query is not an object");
         }
-        return this.#db.collection(collection).aggregate(query).toArray();
+        return await this.#db.collection(collection).aggregate(query).toArray();
     }
 
     async getDocumentCountByQuery(collection, query) {
@@ -38,6 +42,22 @@ export class MongoDBAdapter {
 
     async runAdminCommand(command) {
         return this.#db.runAdminCommand(command);
+    }
+
+    async runCommand(command) {
+        return this.#db.command(command);
+    }
+
+    async listCollections(database) {
+        return await this.#connection.db(database).listCollections().toArray();
+    }
+
+    async listDatabases() {
+        return await this.#db.admin().listDatabases();
+    }
+
+    switchDatabase(db_name) {
+        this.#db = this.#connection.db(db_name);
     }
 
     async close() {
