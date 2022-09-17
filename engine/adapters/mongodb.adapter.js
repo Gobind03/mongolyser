@@ -48,15 +48,6 @@ exports.MongoDBAdapter = class {
         return this.#db.command(command);
     }
 
-    // async runCommand(command, database) {
-    //     if (!database) {
-    //         return await this.db.command(command);
-    //     } else {
-    //         console.log(this.db.collection(database));
-    //         return await this.#connection.db(database).command(command);
-    //     }
-    // }
-
     async listCollections(database) {
         return await this.#connection.db(database).listCollections().toArray();
     }

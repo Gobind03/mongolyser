@@ -1,44 +1,44 @@
 {
     "sample_airbnb": [
         {
-            "name": "address.location_2dsphere",
+            "name": "property_type_1_room_type_1",
             "key": {
-                "address.location": "2dsphere"
+                "property_type": 1,
+                "room_type": 1
             },
             "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
             "accesses": {
                 "ops": 0,
-                "since": "2022-09-16T22:52:30.189Z"
+                "since": "2022-09-16T23:56:54.204Z"
             },
             "spec": {
                 "v": 2,
                 "key": {
-                    "address.location": "2dsphere"
+                    "property_type": 1,
+                    "room_type": 1
                 },
-                "name": "address.location_2dsphere",
-                "background": true,
-                "2dsphereIndexVersion": 3
+                "name": "property_type_1_room_type_1"
             },
+            "is_redundant": true,
             "collection_name": "listingsAndReviews",
             "db_name": "sample_airbnb"
         },
         {
-            "name": "name_1",
+            "name": "_id_",
             "key": {
-                "name": 1
+                "_id": 1
             },
             "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
             "accesses": {
-                "ops": 0,
-                "since": "2022-09-16T22:52:30.180Z"
+                "ops": 1,
+                "since": "2022-09-16T22:52:13.866Z"
             },
             "spec": {
                 "v": 2,
                 "key": {
-                    "name": 1
+                    "_id": 1
                 },
-                "name": "name_1",
-                "background": true
+                "name": "_id_"
             },
             "collection_name": "listingsAndReviews",
             "db_name": "sample_airbnb"
@@ -69,21 +69,44 @@
             "db_name": "sample_airbnb"
         },
         {
-            "name": "_id_",
+            "name": "name_1",
             "key": {
-                "_id": 1
+                "name": 1
             },
             "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
             "accesses": {
                 "ops": 0,
-                "since": "2022-09-16T22:52:13.866Z"
+                "since": "2022-09-16T22:52:30.180Z"
             },
             "spec": {
                 "v": 2,
                 "key": {
-                    "_id": 1
+                    "name": 1
                 },
-                "name": "_id_"
+                "name": "name_1",
+                "background": true
+            },
+            "collection_name": "listingsAndReviews",
+            "db_name": "sample_airbnb"
+        },
+        {
+            "name": "address.location_2dsphere",
+            "key": {
+                "address.location": "2dsphere"
+            },
+            "host": "atlas-79wpz9-shard-00-01.22txs.mongodb.net:27017",
+            "accesses": {
+                "ops": 0,
+                "since": "2022-09-16T22:52:30.189Z"
+            },
+            "spec": {
+                "v": 2,
+                "key": {
+                    "address.location": "2dsphere"
+                },
+                "name": "address.location_2dsphere",
+                "background": true,
+                "2dsphereIndexVersion": 3
             },
             "collection_name": "listingsAndReviews",
             "db_name": "sample_airbnb"
