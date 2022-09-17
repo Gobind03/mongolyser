@@ -5,6 +5,7 @@ const isDev = require('electron-is-dev');
 
 // Require Engine Services
 const indexStats = require("./engine/analysers/index.analyser");
+const queryAnalysis = require("./engine/analysers/query.analyser");
 
 
 function createWindow() {
@@ -30,8 +31,9 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  // Register Index Stats IPC
+  // Register Index Stats IPC 
   ipcMain.handle('engine:indexStats', indexStats.get_index_stats);
+  ipcMain.handle('engine:queryAnalysis', queryAnalysis.analyse_queries);
   createWindow();
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
