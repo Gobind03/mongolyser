@@ -4,7 +4,11 @@
   "description": "The All-In-One Leafy Buddy",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "vite",
+    "preview": "vite preview",
+    "build": "vite build",
+    "dev": "concurrently -k  \"BROWSER=none npm start\" \"npm:electron\"",
+    "electron": "electron ."
   },
   "repository": "https://github.com/Gobind03/mongolyser",
   "keywords": [
@@ -16,10 +20,27 @@
   ],
   "author": "MongoDB Flex Consulting",
   "devDependencies": {
+    "@vitejs/plugin-react": "^2.0.0",
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "tailwindcss": "^3.1.6",
+    "vite": "^3.0.0",
     "electron": "^20.1.4"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.2",
+    "chart.js": "^3.8.0",
+    "chartjs-adapter-moment": "^1.0.0",
+    "moment": "^2.29.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-flatpickr": "^3.10.13",
+    "react-router-dom": "^6.3.0",
+    "react-transition-group": "^4.4.2",
+    "concurrently": "^7.4.0",
+    "electron-is-dev": "^2.0.0",
     "handlebars": "^4.7.7",
+    "wait-on": "^6.0.1",
     "mongodb": "^4.9.1",
     "nedb": "^1.8.0"
   }
