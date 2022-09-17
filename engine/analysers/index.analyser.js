@@ -1,6 +1,7 @@
 const MongoDBAdapter = require("../adapters/mongodb.adapter").MongoDBAdapter;
 const lodash = require("lodash");
 const fs = require("fs");
+const { dialog } = require('electron');
 
 
 exports.get_index_stats = async (host, user, password, port = 27017, is_srv = false, queryString) => {
@@ -64,7 +65,11 @@ exports.get_index_stats = async (host, user, password, port = 27017, is_srv = fa
         // Return Stats
         return stats;
     } catch (err) {
-        console.log(err);
+        dialog.showMessageBoxSync({
+            message: err.message,
+            title: "Something Went Wrong.",
+            type: "info"
+        })
     }
 }
 
