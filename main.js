@@ -6,6 +6,7 @@ const isDev = require('electron-is-dev');
 // Require Engine Services
 const indexStats = require("./engine/analysers/index.analyser");
 const queryAnalysis = require("./engine/analysers/query.analyser");
+const writeLoadAnalysis = require("./engine/analysers/write_load.analyser");
 
 
 function createWindow() {
@@ -34,6 +35,8 @@ app.whenReady().then(() => {
   // Register Index Stats IPC 
   ipcMain.handle('engine:indexStats', indexStats.get_index_stats);
   ipcMain.handle('engine:queryAnalysis', queryAnalysis.analyse_queries);
+  ipcMain.handle('engine:writeLoadAnalysis', writeLoadAnalysis.get_write_load_analysis);
+
   createWindow();
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
