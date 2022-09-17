@@ -5,7 +5,7 @@ exports.get_current_conn_analysis = async (host, user, password, port = 27017,
     is_srv = false, queryString) => {
     // Connect to MongoDB 
     let mongoDBAdapter = new MongoDBAdapter();
-    await mongoDBAdapter.connect(host, user, password, "local", port, is_srv, queryString);
+    await mongoDBAdapter.connect(host, user, password, "admin", port, is_srv, queryString);
 
     let serverStatus = await mongoDBAdapter.runCommand({ serverStatus: 1 })
 

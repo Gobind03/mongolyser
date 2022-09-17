@@ -7,6 +7,7 @@ const isDev = require('electron-is-dev');
 const indexStats = require("./engine/analysers/index.analyser");
 const queryAnalysis = require("./engine/analysers/query.analyser");
 const writeLoadAnalysis = require("./engine/analysers/write_load.analyser");
+const connectionAnalysis = require("./engine/analysers/connections.analysis");
 
 
 function createWindow() {
@@ -36,6 +37,7 @@ app.whenReady().then(() => {
   ipcMain.handle('engine:indexStats', indexStats.get_index_stats);
   ipcMain.handle('engine:queryAnalysis', queryAnalysis.analyse_queries);
   ipcMain.handle('engine:writeLoadAnalysis', writeLoadAnalysis.get_write_load_analysis);
+  ipcMain.handle('engine:connectionRealTimeAnalysis', connectionAnalysis.get_current_conn_analysis);
 
   createWindow();
   app.on('activate', function () {
