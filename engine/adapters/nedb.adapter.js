@@ -2,7 +2,7 @@ const Datastore = require('nedb');
 const { app } = require('electron');
 const path = require('path');
 
-export class LocalDBAdapter {
+exports.LocalDBAdapter = class {
 
     #db_name;
     #datastore;
