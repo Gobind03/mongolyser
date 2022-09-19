@@ -2,11 +2,10 @@ const MongoDBAdapter = require("../adapters/mongodb.adapter").MongoDBAdapter;
 const moment = require("moment");
 
 
-exports.get_shard_analysis = async (host, user, password, port = 27016,
-    is_srv = false, queryString) => {
+exports.get_shard_analysis = async (connString) => {
     // Connect to MongoDB 
     let mongoDBAdapter = new MongoDBAdapter();
-    await mongoDBAdapter.connect(host, user, password, "config", port, is_srv, queryString);
+    await mongoDBAdapter.connect(connString, "config");
 
     let chunks_in_shard_pipeline = [
         {
@@ -217,11 +216,10 @@ exports.get_shard_analysis = async (host, user, password, port = 27016,
 };
 
 
-exports.get_shard_status = async (host, user, password, port = 27016,
-    is_srv = false, queryString) => {
+exports.get_shard_status = async (connString) => {
     // Connect to MongoDB 
     let mongoDBAdapter = new MongoDBAdapter();
-    await mongoDBAdapter.connect(host, user, password, "admin", port, is_srv, queryString);
+    await mongoDBAdapter.connect(connString);
 
     let balancer = await mongodbAdapter.runCommand({ balancerStatus: 1 });
     let shardsList = await mongodbAdapter.runCommand({ getShardMap: 1 });

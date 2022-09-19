@@ -41,10 +41,13 @@
     "nedb": "^1.8.0",
     "qs": "^6.11.0",
     "react": "^18.2.0",
+    "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
     "react-flatpickr": "^3.10.13",
     "react-router-dom": "^6.3.0",
+    "react-select": "^5.4.0",
     "react-transition-group": "^4.4.2",
+    "styled-components": "^5.3.5",
     "wait-on": "^6.0.1"
   }
 }

@@ -10,5 +10,6 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 
 contextBridge.exposeInMainWorld('engineAPI', {
-  dbStats: () => ipcRenderer.invoke('engine:dbStats')
+  dbStats: () => ipcRenderer.invoke('engine:dbStats'),
+  indexStats: (...args) => ipcRenderer.invoke('engine:indexStats', ...args)
 })

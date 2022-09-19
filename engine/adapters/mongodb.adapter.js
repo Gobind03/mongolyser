@@ -1,15 +1,11 @@
 const mongodb = require("mongodb");
 
-
 exports.MongoDBAdapter = class {
     #db;
     #connection;
 
-    async connect(host, user, password, db_name, port = 27017, is_srv = false, queryString) {
+    async connect(con_string, db_name = "admin") {
         try {
-            let con_string = "";
-            if (is_srv) con_string = "mongodb+srv://" + user + ":" + password + "@" + host + "/" + queryString;
-            else con_string = "mongodb://" + user + ":" + password + "@" + host + ":" + port + "/" + queryString;
             this.#connection = await mongodb.MongoClient.connect(con_string, { useNewUrlParser: true });
             this.#db = this.#connection.db(db_name);
             console.log("MongoClient Connection successfull.");
@@ -33,6 +29,7 @@ exports.MongoDBAdapter = class {
         if (!Array.isArray(query)) {
             throw Error("mongoClient.findDocByAggregation: query is not an object");
         }
+        
         return await this.#db.collection(collection).aggregate(query).toArray();
     }
 

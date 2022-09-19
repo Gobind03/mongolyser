@@ -1,11 +1,10 @@
 const MongoDBAdapter = require("../adapters/mongodb.adapter").MongoDBAdapter;
 
 
-exports.get_write_load_analysis = async (host, user, password, port = 27017,
-    is_srv = false, queryString) => {
+exports.get_write_load_analysis = async (connString) => {
     // Connect to MongoDB 
     let mongoDBAdapter = new MongoDBAdapter();
-    await mongoDBAdapter.connect(host, user, password, "local", port, is_srv, queryString);
+    await mongoDBAdapter.connect(connString, "local");
 
     // Get Group By OpType
     let oplog_count_by_optype = await mongoDBAdapter.runAggregation("oplog.rs", [{
