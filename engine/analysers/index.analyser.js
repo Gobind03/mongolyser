@@ -21,7 +21,9 @@ exports.get_index_stats = async (channel, connectionString) => {
             totalIdx: 0,
             totalCollections: 0,
             collectionWithLargeNoOfIndexes: "",
-            _lastIndexLengthFound: 0
+            _lastIndexLengthFound: 0,
+            nsRedundantIdx: [],
+            nsUnusedIdx: []
         };
 
         // Iterate Over All Databases To Get Their Collection-wise Indexes
@@ -56,7 +58,10 @@ exports.get_index_stats = async (channel, connectionString) => {
                                 if (index_stats[l].name.startsWith(index_stats[k].name) && index_stats[k].name != index_stats[l].name) {
                                     index_stats[k]["is_redundant"] = true;
                                     // Increment the summary counter
+                                    // push it to unsued idx ns
                                     idx_summary.redundantIdx++;
+                                    idx_summary.nsRedundantIdx.push(`${dbs.databases[db].name}.${collections[each_collection].name}`)
+
                                 }
                             }
                         }
@@ -64,12 +69,16 @@ exports.get_index_stats = async (channel, connectionString) => {
                         // Store All Indexes For Collections
                         if (index_stats && index_stats.length > 0) {
                             index_stats.forEach((each_stat) => {
-                                idx_summary["unusedIdx"] += each_stat?.accesses?.ops === 0 ? 1 : 0;
                                 idx_summary["totalIdx"] += 1; 
                                 each_stat['collection_name'] = collections[each_collection].name;
                                 each_stat['db_name'] = dbs.databases[db].name;
                                 each_stat['namespace'] = dbs.databases[db].name + "." + collections[each_collection].name;
                                 idx_stats.push(each_stat)
+
+                                if (each_stat?.accesses?.ops === 0) {
+                                    idx_summary["unusedIdx"] += 1
+                                    idx_summary.nsUnusedIdx = Array.from(new Set([...idx_summary.nsUnusedIdx, `${dbs.databases[db].name}.${collections[each_collection].name}`]))
+                                }
                             });
 
                             if (index_stats.length > idx_summary._lastIndexLengthFound) {
