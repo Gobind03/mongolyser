@@ -14,7 +14,7 @@ const shardAnalysis = require("./engine/analysers/shard.analysis");
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1024,
+    width: 1366,
     height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')

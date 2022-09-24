@@ -44,7 +44,7 @@ export default (props) => {
   }
 
   return (
-    <div className="w-screen mb-10">
+    <div className="w-screen max-w-5xl mb-10">
       <div className="col-span-full bg-white shadow-lg rounded-sm border border-slate-200 m-10">
         <header className="px-5 py-4 border-b border-slate-100">
           <h2 className="font-semibold text-indigo-800">Index Stats Summary</h2>
