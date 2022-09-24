@@ -95,7 +95,7 @@ exports.get_index_stats = async (channel, connectionString) => {
         let stats = lodash.groupBy(idx_stats, (idx_stat) => { return idx_stat.namespace });
 
         // Return Stats
-        return { idx_details: stats, idx_summary: idx_summary };
+        return { status:200,message:"Success",idx_details: stats, idx_summary: idx_summary };
     } catch (err) {
         console.error(err);
         dialog.showMessageBoxSync({
@@ -103,6 +103,7 @@ exports.get_index_stats = async (channel, connectionString) => {
             title: "Something Went Wrong.",
             type: "info"
         })
+        return { status:500, message: err.message };
     }
 }
 

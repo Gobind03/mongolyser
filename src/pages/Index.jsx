@@ -25,6 +25,10 @@ export default (props) => {
 
     try {
       const data = await window.engineAPI.indexStats(path);
+      if(data.status===500){
+        console.log(data);
+        return;
+      }
       console.log(data);
       setData(data);
       setVisibleUI(VISIBLE_UI_STATE.INDEX);

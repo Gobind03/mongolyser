@@ -12,6 +12,7 @@ exports.MongoDBAdapter = class {
         }
         catch (ex) {
             console.error("MongoDB Connection Error.,", ex);
+            throw ex;
         }
     }
 
