@@ -4,17 +4,27 @@ const fs = require("fs");
 const { dialog } = require('electron');
 
 
-exports.get_index_stats = async (host, user, password, port = 27017, is_srv = false, queryString) => {
+exports.get_index_stats = async (channel, connectionString) => {
     try {
         // Create MongoDB Connection
         const mongo_connection = new MongoDBAdapter();
-        await mongo_connection.connect(host, user, password, "admin", port, is_srv, queryString);
+        await mongo_connection.connect(connectionString);
 
         // Get List Of All Databases
         let dbs = await mongo_connection.listDatabases();
 
         // Central Storage For All Indexes
         let idx_stats = [];
+        let idx_summary = {
+            redundantIdx: 0,
+            unusedIdx: 0,
+            totalIdx: 0,
+            totalCollections: 0,
+            collectionWithLargeNoOfIndexes: "",
+            _lastIndexLengthFound: 0,
+            nsRedundantIdx: [],
+            nsUnusedIdx: []
+        };
 
         // Iterate Over All Databases To Get Their Collection-wise Indexes
         for (let db in dbs.databases) {
@@ -34,13 +44,24 @@ exports.get_index_stats = async (host, user, password, port = 27017, is_srv = fa
                         // Switch Context To Iterating Database
                         mongo_connection.switchDatabase(dbs.databases[db].name);
                         // Get All Indexes For The Collection
-                        let index_stats = await mongo_connection.runAggregation(collections[each_collection].name, [{ $indexStats: {} }]);
+                        let index_stats = [];
+                        if (["view", "timeseries"].indexOf(collections[each_collection].type) < 0 ) {
+                             index_stats = await mongo_connection.runAggregation(collections[each_collection].name, [{ "$indexStats": {} }]);
+                        }
+
+                        // increment collection counter
+                        idx_summary["totalCollections"] += 1;
 
                         // Calculate Redundancy
                         for (let k = 0; k < index_stats.length; k++) {
                             for (let l = 0; l < index_stats.length; l++) {
                                 if (index_stats[l].name.startsWith(index_stats[k].name) && index_stats[k].name != index_stats[l].name) {
                                     index_stats[k]["is_redundant"] = true;
+                                    // Increment the summary counter
+                                    // push it to unsued idx ns
+                                    idx_summary.redundantIdx++;
+                                    idx_summary.nsRedundantIdx.push(`${dbs.databases[db].name}.${collections[each_collection].name}`)
+
                                 }
                             }
                         }
@@ -48,11 +69,22 @@ exports.get_index_stats = async (host, user, password, port = 27017, is_srv = fa
                         // Store All Indexes For Collections
                         if (index_stats && index_stats.length > 0) {
                             index_stats.forEach((each_stat) => {
+                                idx_summary["totalIdx"] += 1; 
                                 each_stat['collection_name'] = collections[each_collection].name;
                                 each_stat['db_name'] = dbs.databases[db].name;
                                 each_stat['namespace'] = dbs.databases[db].name + "." + collections[each_collection].name;
                                 idx_stats.push(each_stat)
-                            })
+
+                                if (each_stat?.accesses?.ops === 0) {
+                                    idx_summary["unusedIdx"] += 1
+                                    idx_summary.nsUnusedIdx = Array.from(new Set([...idx_summary.nsUnusedIdx, `${dbs.databases[db].name}.${collections[each_collection].name}`]))
+                                }
+                            });
+
+                            if (index_stats.length > idx_summary._lastIndexLengthFound) {
+                                idx_summary["collectionWithLargeNoOfIndexes"] = `${dbs.databases[db].name}.${collections[each_collection].name}`;
+                                idx_summary["_lastIndexLengthFound"] = index_stats.length;
+                            }                            
                         }
                     }
                 }
@@ -63,8 +95,9 @@ exports.get_index_stats = async (host, user, password, port = 27017, is_srv = fa
         let stats = lodash.groupBy(idx_stats, (idx_stat) => { return idx_stat.namespace });
 
         // Return Stats
-        return stats;
+        return { idx_details: stats, idx_summary: idx_summary };
     } catch (err) {
+        console.error(err);
         dialog.showMessageBoxSync({
             message: err.message,
             title: "Something Went Wrong.",

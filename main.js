@@ -9,13 +9,14 @@ const queryAnalysis = require("./engine/analysers/query.analyser");
 const writeLoadAnalysis = require("./engine/analysers/write_load.analyser");
 const connectionAnalysis = require("./engine/analysers/connections.analysis");
 const shardAnalysis = require("./engine/analysers/shard.analysis");
+const pickerUtils = require('./engine/utils/pickers');
 
 
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1366,
+    height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
@@ -36,6 +37,7 @@ function createWindow() {
 app.whenReady().then(() => {
   // Register Index Stats IPC 
   ipcMain.handle('engine:indexStats', indexStats.get_index_stats);
+  ipcMain.handle('engine:filePicker', pickerUtils.filePicker);
   ipcMain.handle('engine:queryAnalysis', queryAnalysis.analyse_queries);
   ipcMain.handle('engine:writeLoadAnalysis', writeLoadAnalysis.get_write_load_analysis);
   ipcMain.handle('engine:connectionRealTimeAnalysis', connectionAnalysis.get_current_conn_analysis);
