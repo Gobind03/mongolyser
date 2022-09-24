@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import IndexBanner from "../partials/dashboard/IndexBanner";
 import IndexStatsDashboard from "../partials/dashboard/IndexStatsDashboard";
 import QueryAnalyserDashboard from "../partials/dashboard/QueryAnalyserDashboard";
+
 // import WelcomeBanner from "../partials/dashboard/WelcomeBanner";
 
 const VISIBLE_UI_STATE = {
@@ -80,30 +81,35 @@ export default (props) => {
       default:
         break;
     }
+  }
 
-
+  function onBackAction() {
+    setVisibleUI(VISIBLE_UI_STATE.DEFAULT);
   }
 
   return (
-    <div className="flex bg-indigo-200 justify-center w-screen min-h-screen">
-      { visibleUI === VISIBLE_UI_STATE.DEFAULT && (
-          <IndexBanner 
-            data={data}
-            onAction={onActionTrigger} />
-        ) 
-      }
-      { visibleUI === VISIBLE_UI_STATE.INDEX && (
-          <IndexStatsDashboard 
-            data={data}
-          />
-        ) 
-      }
-      { visibleUI === VISIBLE_UI_STATE.QUERY_ANALYSIS && (
-          <QueryAnalyserDashboard 
-            data={data}
-          />
-        ) 
-      }
-    </div>
+      <div className="flex bg-indigo-200 justify-center w-screen min-h-screen">
+        { visibleUI === VISIBLE_UI_STATE.DEFAULT && (
+            <IndexBanner 
+              data={data}
+              onAction={onActionTrigger}
+              backAction={onBackAction} />
+          ) 
+        }
+        { visibleUI === VISIBLE_UI_STATE.INDEX && (
+            <IndexStatsDashboard 
+              data={data}
+              backAction={onBackAction}
+            />
+          ) 
+        }
+        { visibleUI === VISIBLE_UI_STATE.QUERY_ANALYSIS && (
+            <QueryAnalyserDashboard 
+              data={data}
+              backAction={onBackAction}
+            />
+          ) 
+        }
+      </div>
   )
 }

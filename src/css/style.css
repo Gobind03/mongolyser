@@ -11,3 +11,15 @@
 @import 'additional-styles/theme.css';
 
 @import 'tailwindcss/utilities';
+
+.scroll-mongo-to-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50% !important;
+}
+
+.scroll-mongo-to-top > svg {
+    height: 16px;
+    width: 16px;
+}

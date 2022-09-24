@@ -45,6 +45,7 @@
     "react-dom": "^18.2.0",
     "react-flatpickr": "^3.10.13",
     "react-router-dom": "^6.3.0",
+    "react-scroll-to-top": "^3.0.0",
     "react-select": "^5.4.0",
     "react-transition-group": "^4.4.2",
     "styled-components": "^5.3.5",

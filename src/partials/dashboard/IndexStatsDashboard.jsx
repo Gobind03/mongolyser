@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import BackBanner from "./BackBanner";
+import ScrollToTop from "react-scroll-to-top";
 
 
 const displayNames = {
@@ -25,7 +27,7 @@ export default (props) => {
 
   const [visibleToggles, setVisibleToggles] = useState([]);
 
-  const data = props.data;
+  const {data, backAction} = props;
   const availableIdxSummaries = Object.keys(displayNames);
 
   if (!data) {
@@ -45,6 +47,7 @@ export default (props) => {
 
   return (
     <div className="w-screen max-w-5xl mb-10">
+      <BackBanner backAction={backAction}/>
       <div className="col-span-full bg-white shadow-lg rounded-sm border border-slate-200 m-10">
         <header className="px-5 py-4 border-b border-slate-100">
           <h2 className="font-semibold text-indigo-800">Index Stats Summary</h2>
@@ -144,6 +147,7 @@ export default (props) => {
           }
         </ul>
       </div>
+      <ScrollToTop smooth className="scroll-mongo-to-top"/>
     </div>
   )
 }
