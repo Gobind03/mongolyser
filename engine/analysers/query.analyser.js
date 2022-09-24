@@ -29,6 +29,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
 
     // Create NeDB Instance
     let local_db_detail = new LocalDBAdapter("query_analysis_detail");
+    let local_db_grouped = new LocalDBAdapter("query_analysis_grouped");
     let local_db_summary = new LocalDBAdapter("query_analysis_summary");
 
     // Initiate Log Stream
@@ -115,7 +116,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                             if (opType === "Aggregate") {
                                 let aggregation = process_aggregation(log.attr.command.pipeline);
                                 parsed_log.Filter = JSON.stringify(aggregation.filter);
-                                parsed_log.Sort = aggregation.sort;
+                                parsed_log.Sort = JSON.stringify(aggregation.sort);
                                 parsed_log.Blocking = aggregation.blocking;
                                 parsed_log.Lookup = aggregation.lookup;
                                 parsed_log["Plan Summary"] = log.attr.planSummary;
@@ -135,7 +136,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                                 if (typeof (log.attr.originatingCommand.pipeline) != "undefined") {
                                     let aggregation = process_aggregation(log.attr.originatingCommand.pipeline);
                                     parsed_log.Filter = JSON.stringify(aggregation.filter);
-                                    parsed_log.Sort = aggregation.sort;
+                                    parsed_log.Sort = JSON.stringify(aggregation.sort);
                                     parsed_log.Blocking = aggregation.blocking;
                                     parsed_log.Lookup = aggregation.lookup;
                                 } else {
@@ -188,7 +189,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
         .on('end', async function () {
             console.log("Sending Results to client");
             local_db_summary.insert(parsed_log_summary).catch(console.error);
-            const data = await local_db_detail.fetch({}, 10, 0).catch(e => console)
+            const data = await local_db_detail.fetch({}, 20, 0).catch(e => console)
             resolve({
                 status: 200,
                 data: {

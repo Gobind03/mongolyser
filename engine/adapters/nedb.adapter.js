@@ -24,7 +24,15 @@ exports.LocalDBAdapter = class {
     }
 
     _clearDatabase() {
-      fs.unlinkSync(this.#db_path);
+      try {
+        fs.unlinkSync(this.#db_path);
+      } catch (error) {
+        if (error.code === "ENOENT") {
+          console.log("No Base DB File Found");
+        } else {
+          console.error(error);
+        }
+      }
     }
 
     insert(obj) {
