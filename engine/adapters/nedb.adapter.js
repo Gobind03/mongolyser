@@ -1,17 +1,30 @@
-const Datastore = require('nedb');
+const Datastore = require('@seald-io/nedb');
 const { app } = require('electron');
 const path = require('path');
+const fs = require("fs")
 
 exports.LocalDBAdapter = class {
 
     #db_name;
     #datastore;
+    #db_path;
+
     constructor(db_name) {
         this.#db_name = db_name;
+        this.#db_path = path.join(app.getPath("temp"), this.#db_name + ".db");
+        
+        // remove old processes
+        this._clearDatabase();
+        
+        // create a new instance
         this.#datastore = new Datastore({
-            filename: path.join(app.getPath("temp"), this.#db_name + ".db"),
+            filename: this.#db_path,
             autoload: true
         });
+    }
+
+    _clearDatabase() {
+      fs.unlinkSync(this.#db_path);
     }
 
     insert(obj) {
