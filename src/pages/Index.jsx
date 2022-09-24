@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import IndexBanner from "../partials/dashboard/IndexBanner";
 import IndexStatsDashboard from "../partials/dashboard/IndexStatsDashboard";
+import QueryAnalyserDashboard from "../partials/dashboard/QueryAnalyserDashboard";
 // import WelcomeBanner from "../partials/dashboard/WelcomeBanner";
 
 const VISIBLE_UI_STATE = {
   DEFAULT: "DEFAULT",
-  INDEX: "INDEX"
+  INDEX: "INDEX",
+  QUERY_ANALYSIS: "QUERY_ANALYSIS"
 }
 
 export default (props) => {
@@ -56,6 +58,8 @@ export default (props) => {
     try {
       const data = await window.engineAPI.queryAnalysis(path);
       console.log(data);
+      setData(data);
+      setVisibleUI(VISIBLE_UI_STATE.QUERY_ANALYSIS);
     } catch (error) {
       console.error(error);
     }
@@ -90,6 +94,12 @@ export default (props) => {
       }
       { visibleUI === VISIBLE_UI_STATE.INDEX && (
           <IndexStatsDashboard 
+            data={data}
+          />
+        ) 
+      }
+      { visibleUI === VISIBLE_UI_STATE.QUERY_ANALYSIS && (
+          <QueryAnalyserDashboard 
             data={data}
           />
         ) 
