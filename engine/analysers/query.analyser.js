@@ -28,7 +28,8 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
     };
 
     // Create NeDB Instance
-    let local_db = new LocalDBAdapter("query_analysis");
+    let local_db_detail = new LocalDBAdapter("query_analysis_detail");
+    let local_db_summary = new LocalDBAdapter("query_analysis_summary");
 
     // Initiate Log Stream
     let stream = fs.createReadStream(log_file)
@@ -162,7 +163,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                             }
 
                             // Insert to local data store in temp directory
-                            local_db.insert(parsed_log);
+                            local_db_detail.insert(parsed_log);
                         }
                     }
                 }
@@ -182,6 +183,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
             };
         })
         .on('end', function () {
+            local_db_summary.insert(parsed_log_summary);
             resolve({
                 status: 200,
                 data: {
