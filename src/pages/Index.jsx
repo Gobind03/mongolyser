@@ -3,8 +3,6 @@ import IndexBanner from "../partials/dashboard/IndexBanner";
 import IndexStatsDashboard from "../partials/dashboard/IndexStatsDashboard";
 import QueryAnalyserDashboard from "../partials/dashboard/QueryAnalyserDashboard";
 
-// import WelcomeBanner from "../partials/dashboard/WelcomeBanner";
-
 const VISIBLE_UI_STATE = {
   DEFAULT: "DEFAULT",
   INDEX: "INDEX",
