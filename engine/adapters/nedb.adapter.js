@@ -14,16 +14,29 @@ exports.LocalDBAdapter = class {
         });
     }
 
-    insert(object) {
-        return this.#datastore.insert(object, (err, newDoc) => {
-            if (err) return false;
-            else return true;
-        });
-    }
+    insert(obj) {
+      return new Promise((resolve, reject) => {
+        this.#datastore.insert(obj, (err, result) => {
+          if (err) {
+              reject(err);
+              return;
+          }
+          resolve(result)
+        })
+      })
+   }
 
-    fetch(query) {
-        return this.#datastore.find(query, (err, docs) => {
-            return docs;
-        });
+    fetch(query, limit = 100, skip = 0, projection = {}) {
+      return new Promise((resolve, reject) => {
+        this.#datastore.find(query).projection(projection).skip(skip).limit(limit).exec((err, data) => {
+          if (err) { 
+            reject(err);
+            return;
+          }
+
+          resolve(data)
+          
+        })
+      })
     }
 }
