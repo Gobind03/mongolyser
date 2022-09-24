@@ -31,17 +31,63 @@ export default (props) => {
     }
   }
 
+  async function onFilePicker() {
+    try {
+      const data = await window.engineAPI.logFilePicker();
+      if (data.status !== 200) {
+        alert("Please select a log file to get started");
+        return;
+      }
+
+      setVisibleUI(VISIBLE_UI_STATE.DEFAULT);
+      setData({ filePath: data.data.filePath })
+    } catch (error) {
+      alert("Error: Interal Engine Error")
+      console.error(error);
+    }
+  }
+
+  async function onQueryAnalysis(path) {
+    if (!path) {
+      alert("Please select a log file to get started");
+      return;
+    }
+
+    try {
+      const data = await window.engineAPI.queryAnalysis(path);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   function onActionTrigger({ value, type, path }) {
-    if (value === "Index Analysis") {
-      console.log("onActionTrigger:path", path);
-      onIndexStats(path);
+    console.log("onActionTrigger:path", path);
+    switch (value) {
+      case "Index Analysis":
+        onIndexStats(path);
+        break;
+      case "File Picker":
+        onFilePicker();
+        break;
+      case "Query Analysis":
+        onQueryAnalysis(path);
+        break;
+      default:
+        break;
     }
+
+
   }
 
   return (
     <div className="flex bg-indigo-200 justify-center w-screen min-h-screen">
-      { visibleUI === VISIBLE_UI_STATE.DEFAULT && <IndexBanner onAction={onActionTrigger} /> }
+      { visibleUI === VISIBLE_UI_STATE.DEFAULT && (
+          <IndexBanner 
+            data={data}
+            onAction={onActionTrigger} />
+        ) 
+      }
       { visibleUI === VISIBLE_UI_STATE.INDEX && (
           <IndexStatsDashboard 
             data={data}

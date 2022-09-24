@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from "react-select";
 
 // TODO: Discuss should we have a central place to list all analysis
@@ -18,8 +18,14 @@ function IndexBanner(props) {
   const [actionSelected, setActionSelected] = useState({});
   const [connectionUrl, setConnectionUrl] = useState("");
 
+  useEffect(() => {
+    if (props.data.filePath) {
+      setConnectionUrl(props.data.filePath);
+    }
+  }, [props.data.filePath])
+
   return (
-    <div className="relative p-4 sm:p-6 rounded-sm overflow-hidden">
+    <div className="relative p-4 sm:p-6 rounded-sm overflow-hidden max-w-sm">
 
       {/* Background illustration */}
       <div className="absolute right-0 top-0 -mt-4 mr-16 pointer-events-none hidden xl:block" aria-hidden="true">
@@ -45,9 +51,11 @@ function IndexBanner(props) {
       {
         actionSelected.type === "log" && (
           <>
-            <div className="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-8 flex flex-col">
-              <button className='btn bg-indigo-500 hover:bg-indigo-600 text-white'>Click to upload log files</button>
-              <code className='mt-5'>File Selected: /user/data/video</code>
+            <div className="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-8 flex flex-col text-ellipsis">
+              <button onClick={e => props.onAction({ value: "File Picker" })} className='btn bg-indigo-500 hover:bg-indigo-600 text-white'>Click to upload log files</button>
+              { props.data?.filePath && (
+                <pre className='border border-slate-300 mt-5 max-w-sm truncate ...'><code title={props.data?.filePath}>
+                File Selected: {props.data?.filePath.split("/").pop()}</code></pre>)}
             </div>
           </>
         )

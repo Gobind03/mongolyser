@@ -9,7 +9,11 @@ const {
     is_valid_json
 } = require('../utils/common.utility');
 
-exports.analyse_queries = (log_file, slow_ms = 100) => {
+exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
+
+  console.log("File Path recevied", log_file);
+
+  return new Promise((resolve, reject) => {
     let parsed_log_summary = {
         nCOLLSCAN: 0,
         nSlowOps: 0,
@@ -168,15 +172,24 @@ exports.analyse_queries = (log_file, slow_ms = 100) => {
             stream.resume();
         }))
         .on('error', function (err) {
-            return {
+            reject({
+                status: 500,
                 success: false,
                 message: err.message
+            })
+            return {
+                
             };
         })
         .on('end', function () {
-            return {
+            resolve({
+                status: 200,
+                data: {
+                  summary: parsed_log_summary
+                },
                 success: true,
                 message: "Analysis Saved in Local Data Store"
-            };
+            })
         });
+  })
 }
