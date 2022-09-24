@@ -40,7 +40,7 @@ export default (props) => {
   }
 
   return (
-    <div className="flex bg-indigo-200 justify-center w-screen h-screen">
+    <div className="flex bg-indigo-200 justify-center w-screen min-h-screen">
       { visibleUI === VISIBLE_UI_STATE.DEFAULT && <IndexBanner onAction={onActionTrigger} /> }
       { visibleUI === VISIBLE_UI_STATE.INDEX && (
           <IndexStatsDashboard 

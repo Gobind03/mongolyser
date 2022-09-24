@@ -8,6 +8,18 @@ const displayNames = {
   totalCollections: "Total Collections"
 }
 
+function getClassesByName(data) {
+  if (data.is_redundant) {
+    return `mt-4 pl-4 border-l-4 border-red-300`
+  }
+
+  if (data.accesses.ops === 0) {
+    return `mt-4 pl-4 border-l-4 border-amber-300`
+  }
+
+  return `mt-4`
+}
+
 
 export default (props) => {
 
@@ -109,11 +121,11 @@ export default (props) => {
                     <div className="grow">
                       {
                         visibleToggles.includes(idx) && (
-                          <div className=" text-slate-50 bg-slate-600 rounded mt-5 border border-slate-300 p-10 ">
+                          <div className="text-slate-50 bg-slate-600 rounded mt-5 border border-slate-300 p-10 ">
                             {
                               Array.isArray(data.idx_details[ns]) && data.idx_details[ns].map(d => {
                                 return (
-                                  <pre>
+                                  <pre className={getClassesByName(d)}>
                                     <code>
                                       { JSON.stringify(d, null, 4) }
                                     </code>
