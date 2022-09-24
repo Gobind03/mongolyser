@@ -3,9 +3,8 @@ const fs = require("fs");
 const es = require('event-stream');
 const { is_valid_json } = require("../utils/common.utility");
 
-exports.analyse_queries = (log_file) => {
+exports.analyse_events = (log_file) => {
     // Create NeDB Instance
-    let local_db_detail = new LocalDBAdapter("query_analysis_detail");
     let countMap = new Map();
     let count = 0;
 
@@ -42,14 +41,10 @@ exports.analyse_queries = (log_file) => {
             };
         })
         .on('end', function () {
-            countMap.forEach((key, value) => {
-                //console.log(value);
-                //console.log(key);
-                let data = {}
-                // @ts-ignore   
-                data[key] = value;
-                //let data = {"{$key}":value};
-                //console.log(data);
-            });
+            let data_to_return = {};
+            for (let [key, value] of countMap) {
+                data_to_return[key] = value;
+            }
+            return data_to_return;
         });
 }
