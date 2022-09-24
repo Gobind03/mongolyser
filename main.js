@@ -10,6 +10,7 @@ const writeLoadAnalysis = require("./engine/analysers/write_load.analyser");
 const connectionAnalysis = require("./engine/analysers/connections.analysis");
 const shardAnalysis = require("./engine/analysers/shard.analysis");
 const pickerUtils = require('./engine/utils/pickers');
+const clusterEventsAnalysis = require("./engine/analysers/cluster_events.analysis");
 
 
 function createWindow() {
@@ -43,6 +44,7 @@ app.whenReady().then(() => {
   ipcMain.handle('engine:connectionRealTimeAnalysis', connectionAnalysis.get_current_conn_analysis);
   ipcMain.handle('engine:shardAnalysis', shardAnalysis.get_shard_analysis);
   ipcMain.handle('engine:shardStatus', shardAnalysis.get_shard_status);
+  ipcMain.handle('engine:clusterEventsAnalysis', clusterEventsAnalysis.analyse_events);
 
   createWindow();
   app.on('activate', function () {
