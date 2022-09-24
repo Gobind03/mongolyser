@@ -8,7 +8,7 @@ import {
 import './css/style.css';
 
 import './charts/ChartjsConfig';
-
+// mongodb+srv://santhosh:santhosh@cluster1.j5z2f.mongodb.net/?retryWrites=true&w=majority
 // Import pages
 import Dashboard from './pages/Dashboard';
 import Index from './pages/Index';
