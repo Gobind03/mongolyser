@@ -39,7 +39,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
             stream.pause();
 
             // Ignore if log line is empty or null
-            if (!(log_line === '' || log_line === null || is_valid_json(log_line))) {
+            if (is_valid_json(log_line)) {
 
                 // Parse Log Line to JSON
                 let log = JSON.parse(log_line)
@@ -64,7 +64,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                         let opType = parse_optype(log.attr.command);
 
                         // Check for acceptable OpType
-                        if (!opType) {
+                        if (opType) {
                             // Filter Query Details
                             let parsed_log = {
                                 "Op Type": opType,
@@ -78,7 +78,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                                 "Plan Summary": "N.A.",
                                 "App Name": log.attr.appName,
                                 "QueryHash": log.attr.queryHash,
-                                "Log": log_line
+                                "Log": String(log_line)
                             }
 
                             // Calculate SlowOp Count
@@ -87,7 +87,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                             }
 
                             if (opType === "Find") {
-                                parsed_log.Filter = log.attr.command.filter;
+                                parsed_log.Filter = JSON.stringify(log.attr.command.filter);
                                 parsed_log.Sort = (log.attr.command.sort) ? JSON.stringify(log.attr.command.sort) : "No Sort";
                                 parsed_log["Plan Summary"] = log.attr.planSummary;
                                 if (parsed_log["Plan Summary"] === "COLLSCAN") parsed_log_summary.nCOLLSCAN++;
@@ -103,7 +103,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                                 }
                             }
                             if (opType === "Count") {
-                                parsed_log.Filter = log.attr.command.query;
+                                parsed_log.Filter = JSON.stringify(log.attr.command.query);
                                 parsed_log["Plan Summary"] = log.attr.planSummary;
                                 if (parsed_log["Plan Summary"] === "COLLSCAN") parsed_log_summary.nCOLLSCAN++;
                                 parsed_log_summary.nCount++;
@@ -113,7 +113,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                             }
                             if (opType === "Aggregate") {
                                 let aggregation = process_aggregation(log.attr.command.pipeline);
-                                parsed_log.Filter = aggregation.filter;
+                                parsed_log.Filter = JSON.stringify(aggregation.filter);
                                 parsed_log.Sort = aggregation.sort;
                                 parsed_log.Blocking = aggregation.blocking;
                                 parsed_log.Lookup = aggregation.lookup;
@@ -133,12 +133,12 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                             if (opType === "getMore") {
                                 if (typeof (log.attr.originatingCommand.pipeline) != "undefined") {
                                     let aggregation = process_aggregation(log.attr.originatingCommand.pipeline);
-                                    parsed_log.Filter = aggregation.filter;
+                                    parsed_log.Filter = JSON.stringify(aggregation.filter);
                                     parsed_log.Sort = aggregation.sort;
                                     parsed_log.Blocking = aggregation.blocking;
                                     parsed_log.Lookup = aggregation.lookup;
                                 } else {
-                                    parsed_log.Filter = log.attr.originatingCommand.filter;
+                                    parsed_log.Filter = JSON.stringify(log.attr.originatingCommand.filter);
                                     parsed_log.Sort = (log.attr.originatingCommand.sort) ? JSON.stringify(log.attr.originatingCommand.sort) : "No Sort";
                                 }
                                 parsed_log["Plan Summary"] = log.attr.planSummary;
@@ -148,7 +148,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                             if (opType === "Update") {
                                 // Bypass UpdateMany Logs As they do not contain much information
                                 if (typeof (log.attr.command.updates[0]) != 'undefined')
-                                    parsed_log.Filter = log.attr.command.updates[0].q;
+                                    parsed_log.Filter = JSON.stringify(log.attr.command.updates[0].q);
 
                                 if (parsed_log["Plan Summary"] === "COLLSCAN") parsed_log_summary.nCOLLSCAN++;
                                 parsed_log_summary.nUpdate++;
@@ -163,7 +163,9 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                             }
 
                             // Insert to local data store in temp directory
-                            local_db_detail.insert(parsed_log);
+                            local_db_detail.insert(parsed_log).catch(e => {
+                              console.error(e)
+                            });
                         }
                     }
                 }
@@ -182,12 +184,15 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                 
             };
         })
-        .on('end', function () {
-            local_db_summary.insert(parsed_log_summary);
+        .on('end', async function () {
+            console.log("Sending Results to client");
+            local_db_summary.insert(parsed_log_summary).catch(console.error);
+            const data = await local_db_detail.fetch({}, 10, 0)
             resolve({
                 status: 200,
                 data: {
-                  summary: parsed_log_summary
+                  summary: parsed_log_summary,
+                  initialData: data
                 },
                 success: true,
                 message: "Analysis Saved in Local Data Store"
