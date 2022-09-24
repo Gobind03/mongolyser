@@ -68,6 +68,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                             // Filter Query Details
                             let parsed_log = {
                                 "Op Type": opType,
+                                "timestamp": log.t.$date,
                                 "Duration": log.attr.durationMillis,
                                 "QTR": "-",
                                 "Namespace": log.attr.ns,
@@ -163,7 +164,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
                             }
 
                             // Insert to local data store in temp directory
-                            local_db_detail.insert(parsed_log).catch(e => {
+                            local_db_detail.insert({ ...parsed_log }).catch(e => {
                               console.error(e)
                             });
                         }
@@ -187,7 +188,7 @@ exports.analyse_queries = async (channel, log_file, slow_ms = 100) => {
         .on('end', async function () {
             console.log("Sending Results to client");
             local_db_summary.insert(parsed_log_summary).catch(console.error);
-            const data = await local_db_detail.fetch({}, 10, 0)
+            const data = await local_db_detail.fetch({}, 10, 0).catch(e => console)
             resolve({
                 status: 200,
                 data: {
