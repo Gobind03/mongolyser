@@ -9,8 +9,7 @@ import './css/style.css';
 
 import './charts/ChartjsConfig';
 // mongodb+srv://santhosh:santhosh@cluster1.j5z2f.mongodb.net/?retryWrites=true&w=majority
-// Import pages
-import Dashboard from './pages/Dashboard';
+
 import Index from './pages/Index';
 
 function App() {
@@ -26,8 +25,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path='/' element={<Index />} />
-        <Route exact path="/dashboard" element={<Dashboard />} />
+        <Route exact path='/' element={<Index />} />\
       </Routes>
     </>
   );

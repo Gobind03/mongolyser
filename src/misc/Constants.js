@@ -1,0 +1,7 @@
+const CONSTANTS = {
+    DEFAULT: "DEFAULT",
+    INDEX: "INDEX",
+    QUERY_ANALYSIS: "QUERY_ANALYSIS",
+}
+
+export default CONSTANTS;
