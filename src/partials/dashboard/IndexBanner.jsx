@@ -91,7 +91,7 @@ function IndexBanner(props) {
       {actionSelected.type === "log" && (
         <>
           <input
-            className="mt-5 block w-full text-sm text-indigo-800 rounded-lg border border-white cursor-pointer dark:text-indigo-800 focus:outline-none dark:bg-white dark:border-white dark:placeholder-white"
+            className="mt-5 block w-full text-sm text-indigo-800 rounded-lg border border-indigo cursor-pointer dark:text-indigo-800 focus:outline-none dark:bg-white dark:border-white dark:placeholder-white"
             id="file_input"
             type="file"
             onChange={(e) => {
