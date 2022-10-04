@@ -11,6 +11,8 @@ const connectionAnalysis = require("./engine/analysers/connections.analysis");
 const shardAnalysis = require("./engine/analysers/shard.analysis");
 const pickerUtils = require('./engine/utils/pickers');
 const clusterEventsAnalysis = require("./engine/analysers/cluster_events.analysis");
+const hardwareAnalysis = require("./engine/analysers/hardware.analysis");
+
 
 
 function createWindow() {
@@ -45,12 +47,16 @@ app.whenReady().then(() => {
   ipcMain.handle('engine:shardAnalysis', shardAnalysis.get_shard_analysis);
   ipcMain.handle('engine:shardStatus', shardAnalysis.get_shard_status);
   ipcMain.handle('engine:clusterEventsAnalysis', clusterEventsAnalysis.analyse_events);
+  ipcMain.handle('engine:getOplogAnalysis', writeLoadAnalysis.get_oplog_stats);
+  ipcMain.handle('engine:hardwareAnalysis', hardwareAnalysis.get_cluster_stats);
 
   createWindow();
+
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
+
   })
 })
 

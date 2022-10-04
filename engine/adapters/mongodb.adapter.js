@@ -21,8 +21,18 @@ exports.MongoDBAdapter = class {
         }
         return await this.#db.collection(collection).find(query, {
             projection: projection || {},
-            limit: lmt || 0
+            limit: limit || 0 // Fixed the issue, the variable used passed was limit but used was lmt.
         }).toArray();
+    }
+
+    async findDocFieldsByFilterWithSort(collection, query, projection,sort, limit) {
+        if (!query) {
+            throw Error("mongoClient.findDocFieldsByFilter: query is not an object");
+        }
+        return await this.#db.collection(collection).find(query, {
+            projection: projection || {},
+            limit: limit || 0 // Fixed the issue, the variable used passed was limit but used was lmt.
+        }).sort(sort).toArray();
     }
 
     async runAggregation(collection, query) {

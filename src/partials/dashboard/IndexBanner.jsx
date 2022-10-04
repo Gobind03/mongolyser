@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // TODO: Discuss should we have a central place to list all analysis
 function IndexBanner(props) {
