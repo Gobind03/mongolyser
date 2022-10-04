@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import IndexBanner from "../partials/dashboard/IndexBanner";
-import IndexStatsDashboard from "../partials/dashboard/IndexStatsDashboard";
-import QueryAnalyserDashboard from "../partials/dashboard/QueryAnalyserDashboard";
+import ResultLayout from "../partials/Layout/ResultLayout";
+import CONSTANTS from "../misc/Constants";
 
-const VISIBLE_UI_STATE = {
-  DEFAULT: "DEFAULT",
-  INDEX: "INDEX",
-  QUERY_ANALYSIS: "QUERY_ANALYSIS"
-}
 
 export default (props) => {
-
-  const [visibleUI, setVisibleUI] = useState(VISIBLE_UI_STATE.DEFAULT);
+  const {DEFAULT, INDEX, QUERY_ANALYSIS } = CONSTANTS;
+  const [visibleUI, setVisibleUI] = useState(DEFAULT);
   const [data, setData] = useState({});
-
+  
   async function onIndexStats(path) {
-
     // Validation for path
     if (!path) {
       alert("Please enter the MongoDB URL to scan");
@@ -24,26 +18,26 @@ export default (props) => {
 
     try {
       const data = await window.engineAPI.indexStats(path);
-      console.log(data);
       setData(data);
-      setVisibleUI(VISIBLE_UI_STATE.INDEX);
+      setVisibleUI(INDEX);
     } catch (error) {
       console.error(error);
     }
   }
 
-  async function onFilePicker() {
+  async function onFilePicker(event) {
+    const file = event?.target?.files[0];
+    const path = file?.path;
     try {
-      const data = await window.engineAPI.logFilePicker();
-      if (data.status !== 200) {
+      if (!file) {
         alert("Please select a log file to get started");
+        setData({});
         return;
       }
-
-      setVisibleUI(VISIBLE_UI_STATE.DEFAULT);
-      setData({ filePath: data.data.filePath })
+      setVisibleUI(DEFAULT);
+      setData({ filePath: path });
     } catch (error) {
-      alert("Error: Interal Engine Error")
+      alert("Error: Interal Engine Error");
       console.error(error);
     }
   }
@@ -53,25 +47,23 @@ export default (props) => {
       alert("Please select a log file to get started");
       return;
     }
-
     try {
       const data = await window.engineAPI.queryAnalysis(path);
-      console.log(data);
       setData(data);
-      setVisibleUI(VISIBLE_UI_STATE.QUERY_ANALYSIS);
+      setVisibleUI(QUERY_ANALYSIS);
     } catch (error) {
       console.error(error);
     }
   }
 
-  function onActionTrigger({ value, type, path }) {
+  function onActionTrigger({ value, payload, path, type }) {
     console.log("onActionTrigger:path", path);
     switch (value) {
       case "Index Analysis":
         onIndexStats(path);
         break;
       case "File Picker":
-        onFilePicker();
+        onFilePicker(payload);
         break;
       case "Query Analysis":
         onQueryAnalysis(path);
@@ -82,32 +74,22 @@ export default (props) => {
   }
 
   function onBackAction() {
-    setVisibleUI(VISIBLE_UI_STATE.DEFAULT);
+    setVisibleUI(DEFAULT);
   }
 
   return (
-      <div className="flex bg-indigo-200 justify-center w-screen min-h-screen">
-        { visibleUI === VISIBLE_UI_STATE.DEFAULT && (
-            <IndexBanner 
-              data={data}
-              onAction={onActionTrigger}
-              backAction={onBackAction} />
-          ) 
-        }
-        { visibleUI === VISIBLE_UI_STATE.INDEX && (
-            <IndexStatsDashboard 
-              data={data}
-              backAction={onBackAction}
-            />
-          ) 
-        }
-        { visibleUI === VISIBLE_UI_STATE.QUERY_ANALYSIS && (
-            <QueryAnalyserDashboard 
-              data={data}
-              backAction={onBackAction}
-            />
-          ) 
-        }
-      </div>
-  )
-}
+    <>
+      {visibleUI === DEFAULT ? (
+        <div className="flex bg-indigo-200 justify-center w-screen min-h-screen">
+          <IndexBanner
+            data={data}
+            onAction={onActionTrigger}
+            backAction={onBackAction}
+          />
+        </div>
+      ) : (
+        <ResultLayout data={data} backAction={onBackAction} displayComponent={visibleUI}/>
+      )}
+    </>
+  );
+};

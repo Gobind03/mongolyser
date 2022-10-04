@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // TODO: Discuss should we have a central place to list all analysis
 function IndexBanner(props) {
   const [actions, setActions] = useState([
     { value: "Index Analysis", label: "Index Analysis", type: "cluster" },
-    { value: "Sharding Analysis", label: "Sharding Analysis", type: "cluster" },
     { value: "Oplog Analysis", label: "Oplog Analysis", type: "cluster" },
     {
-      value: "General Cluster Health",
-      label: "General Cluster Health",
-      type: "cluster",
-    },
-    {
-      value: "Cluster Event Analysis",
-      label: "Cluster Event Analysis",
+      value: "Query Analysis",
+      label: "Query Analysis (Log Analysis)",
       type: "log",
     },
-    { value: "Query Analysis", label: "Query Analysis", type: "log" },
-    {
-      value: "Query Pattern Analysis",
-      label: "Query Pattern Analysis",
-      type: "log",
-    },
-    { value: "Connection Analysis", label: "Connection Analysis", type: "log" },
   ]);
+  // { value: "Sharding Analysis", label: "Sharding Analysis", type: "cluster" },
+  // {
+  //   value: "General Cluster Health",
+  //   label: "General Cluster Health",
+  //   type: "cluster",
+  // },
+  // {
+  //   value: "Cluster Event Analysis",
+  //   label: "Cluster Event Analysis",
+  //   type: "log",
+  // },
+  // {
+  //   value: "Query Pattern Analysis",
+  //   label: "Query Pattern Analysis",
+  //   type: "log",
+  // },
+  // { value: "Connection Analysis", label: "Connection Analysis", type: "log" },
 
   const [actionSelected, setActionSelected] = useState({});
   const [connectionUrl, setConnectionUrl] = useState("");
@@ -70,8 +73,8 @@ function IndexBanner(props) {
       {actionSelected.type === "cluster" && (
         <div className="mt-5">
           <label
-            for="exampleFormControlInput1"
-            class="form-label inline-block mb-2 text-gray-700"
+            htmlFor="exampleFormControlInput1"
+            className="form-label inline-block mb-2 text-gray-700"
           >
             Enter Cluster Link
           </label>
@@ -87,28 +90,22 @@ function IndexBanner(props) {
 
       {actionSelected.type === "log" && (
         <>
-          <div className="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-8 flex flex-col text-ellipsis">
-            <button
-              onClick={(e) => props.onAction({ value: "File Picker" })}
-              className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
-            >
-              Click to upload log files
-            </button>
-            {props.data?.filePath && (
-              <pre className="border border-slate-300 mt-5 max-w-sm truncate ...">
-                <code title={props.data?.filePath}>
-                  File Selected: {props.data?.filePath.split("/").pop()}
-                </code>
-              </pre>
-            )}
-          </div>
+          <input
+            className="mt-5 block w-full text-sm text-indigo-800 rounded-lg border border-indigo cursor-pointer dark:text-indigo-800 focus:outline-none dark:bg-white dark:border-white dark:placeholder-white"
+            id="file_input"
+            type="file"
+            onChange={(e) => {
+              props.onAction({ value: "File Picker", payload: e });
+            }}
+            accept=".log"
+          />
         </>
       )}
 
       {loader === true ? (
         <button
           type="button"
-          class="btn bg-indigo-500 hover:bg-indigo-600 text-white mt-3"
+          className="btn bg-indigo-500 hover:bg-indigo-600 text-white mt-3"
           disabled
         >
           <svg
@@ -121,8 +118,8 @@ function IndexBanner(props) {
           >
             <path
               opacity="0.2"
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
               fill="white"
             />

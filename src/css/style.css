@@ -17,6 +17,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 50% !important;
+    margin-bottom: 40px;
 }
 
 .scroll-mongo-to-top > svg {
